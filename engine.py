@@ -62,6 +62,14 @@ class Hanoi:
                 return player
         return None
 
+    def board(self):
+        return {pole: list(stack) for pole, stack in self._board.items()}
+
+    def turn(self):
+        if self._turn < len(self._turns):
+            return self._turns[self._turn]
+        return None
+
     def _record(self):
         self._history.append(
             (
