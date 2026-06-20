@@ -9,10 +9,13 @@ class Agent:
     def act(self, game):
         if game.get_turn() != self.player:
             raise ValueError("not this agent's turn")
+        obs = game.observe(self.player)
+        hand = obs["hand"]
         moves = [("skip",)]
-        for pole in game.get_board():
-            if game._legal("lift", pole):
-                moves.append(("lift", pole))
-            if game._legal("place", pole):
+        for pole, stack in obs["poles"].items():
+            if hand is None:
+                if stack:
+                    moves.append(("lift", pole))
+            elif not stack or hand < stack[-1]:
                 moves.append(("place", pole))
         return self._rng.choice(moves)

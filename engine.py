@@ -70,6 +70,14 @@ class Hanoi:
             return self._turns[self._turn]
         return None
 
+    def observe(self, player):
+        suffix = "ab"[player]
+        poles = ("1" + suffix, "2", "3" + suffix)
+        return {
+            "poles": {pole: list(self._board[pole]) for pole in poles},
+            "hand": self._hands[player],
+        }
+
     def _record(self):
         self._history.append(
             (
