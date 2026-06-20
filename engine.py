@@ -16,14 +16,7 @@ class Hanoi:
 
     def step(self, *args):
         legal = self._legal(*args)
-        if legal:
-            kind = args[0]
-            if kind == "lift":
-                self._lift(*args[1:])
-            elif kind == "place":
-                self._place(*args[1:])
-            else:
-                self._skip(*args[1:])
+        if legal: getattr(self, "_" + args[0])(*args[1:])
         self._turn += 1
         self._record()
         return legal
